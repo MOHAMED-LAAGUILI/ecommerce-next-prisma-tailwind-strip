@@ -17,7 +17,7 @@ export const Nav = ({ children }: { children: ReactNode }) => {
   const handleClose = () => setIsOpen(false);
 
   return (
-    <nav className="bg-primary text-primary-foreground flex items-center justify-between px-4 sm:px-8 lg:px-12 py-3 shadow-lg relative">
+    <nav className="bg-primary dark:bg-white dark:text-black  text-primary-foreground flex items-center justify-between px-4 sm:px-8 lg:px-12 py-3 shadow-lg relative">
       {/* Desktop navigation */}
       <div className="hidden md:flex space-x-4 sm:space-x-6">{children}</div>
 

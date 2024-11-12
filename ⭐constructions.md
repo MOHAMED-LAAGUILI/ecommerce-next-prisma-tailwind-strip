@@ -10,8 +10,12 @@ https://www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextj
 
 # setup ui library
 shadcn
-
 npx shadcn@latest init
+
+NextUI
+https://nextui.org/docs/frameworks/nextjs
+npm install -g nextui-cli
+nextui init -t app
 
 # charts
 npm i chart.js react-chartjs-2 

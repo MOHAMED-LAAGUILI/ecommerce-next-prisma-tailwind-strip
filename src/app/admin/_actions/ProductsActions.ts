@@ -3,6 +3,7 @@
 import db from "@/db/db";
 import { z } from "zod";
 import fs from "fs/promises";
+import { notFound } from "next/navigation";
 
 const fileSchema = z.instanceof(File).refine((file) => file.size > 0, {
   message: "File cannot be empty",
@@ -65,5 +66,18 @@ const AddProduct = async (prevState: unknown, formData: FormData) => {
     return { success: false, message: "Failed to add product. Please try again." };
   }
 };
+
+
+export async function toggleProductAvailability(id: string, isAvailableForPurchase: boolean) {  
+  await db.product.update({where: {id}, data:{isAvailableForPurchase}})
+}
+export async function deleteProduct(id: string) {  
+  const product = await db.product.delete({where: {id}})
+  if(product == null){return notFound()}
+
+ await fs.unlink(product.filePath)
+ await fs.unlink(`public${product.imagePath}`)
+
+}
 
 export default AddProduct;

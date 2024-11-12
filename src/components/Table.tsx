@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+"use client"
+import React, { useState, useEffect } from 'react';
 
 type TableProps = {
   title: string;
@@ -15,24 +16,18 @@ const Table: React.FC<TableProps> = ({
 }) => {
   const [sortedRows, setSortedRows] = useState(rows);
 
-  // Sorting function for columns
+  useEffect(() => {
+    setSortedRows(rows);
+  }, [rows]);
+
   const sortRows = (index: number) => {
-    const sorted = [...rows].sort((a, b) => {
-      const aValue = Object.values(a)[index];
-      const bValue = Object.values(b)[index];
-  
-      // Handle null/undefined safely
-      const aSafe = aValue ?? '';  // Fallback to an empty string if aValue is null or undefined
-      const bSafe = bValue ?? '';  // Fallback to an empty string if bValue is null or undefined
-  
-      // Perform the comparison after fallback
-      if (aSafe > bSafe) return 1;
-      if (aSafe < bSafe) return -1;
-      return 0;
+    const sorted = [...sortedRows].sort((a, b) => {
+      const aValue = Object.values(a)[index] ?? '';
+      const bValue = Object.values(b)[index] ?? '';
+      return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
     });
     setSortedRows(sorted);
   };
-  
 
   return (
     <>
@@ -52,7 +47,7 @@ const Table: React.FC<TableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {rows.length === 0 ? (
+          {sortedRows.length === 0 ? (
             <tr>
               <td colSpan={headers.length} className="py-4 text-center text-gray-500">
                 No data available
